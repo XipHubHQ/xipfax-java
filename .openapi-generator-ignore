@@ -1,0 +1,21 @@
+# What openapi-generator would write that the repository keeps as its own or doesn't keep: the
+# README, pom.xml and .gitignore are the repository's own, and the generator's other builds (Gradle
+# and sbt), its CI files, push script, Android manifest, docs, tests and copy of the document aren't
+# kept.
+README.md
+pom.xml
+.gitignore
+build.gradle
+build.sbt
+settings.gradle
+gradle.properties
+gradlew
+gradlew.bat
+gradle/**
+.github/**
+.travis.yml
+git_push.sh
+api/openapi.yaml
+src/main/AndroidManifest.xml
+docs/**
+src/test/**
