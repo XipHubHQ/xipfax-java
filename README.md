@@ -138,7 +138,7 @@ DocumentAdded added =
     drafts.addDocument(addKey, new NewDocument().name("letter.pdf").sizeBytes(pdf.length));
 DocumentAddedUpload upload = added.getUpload();
 if (upload == null) {
-  throw new IllegalStateException("no link to upload to: the request was sent again with its key");
+  throw new IllegalStateException("no link to upload to: the document is ready or removed");
 }
 
 HttpRequest.Builder put =
@@ -166,12 +166,12 @@ request. Sent again with the same key within 24 hours, the request is answered a
 time rather than done twice, so a retry after a timeout can't send a fax twice. The SDK makes up no
 key itself: one it made would be new on each try, and protect nothing.
 
-The answer to a request sent again keeps none of its signed links, nor an endpoint's secret:
-`getUpload()`, a document's `getUrl()` and an endpoint's `getSecret()` come back null. So an upload
-that `addDocument` gave, asked for again with its key, has no link to send the bytes to. Take that
-document out with `removeDocument`, and add it again with a new key. An endpoint whose first answer
-you lost has no secret to check its deliveries by: remove it with `removeWebhookEndpoint`, and
-register it again with a new key.
+The answer to a request sent again keeps none of its signed links, nor an endpoint's secret: a
+document's `getUrl()` and an endpoint's `getSecret()` come back null. `getUpload()` is signed again
+instead while its document is still uploading: asked for again with its key, `addDocument` gives a
+fresh link to send the bytes to, and null once the document is ready or removed. An endpoint whose
+first answer you lost has no secret to check its deliveries by: remove it with
+`removeWebhookEndpoint`, and register it again with a new key.
 
 ## Webhooks
 
