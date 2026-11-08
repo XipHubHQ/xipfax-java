@@ -1,0 +1,30 @@
+# openapi-generator 7.17.0's settings for the SDK, which scripts/generate.sh passes it with the
+# document scripts/sdk-document.jq writes. The client is Java's own HttpClient, from Java 11, with
+# Jackson reading and writing JSON. What the build names, the coordinates, the license and the
+# developers, is pom.xml's alone: the generator writes those only into files the repository doesn't
+# keep.
+library: native
+# The SDK's version, which the generator writes as Configuration.VERSION. scripts/gates.sh holds it
+# to pom.xml's, so each release names it in both.
+artifactVersion: 0.1.0
+# The SDK's Java package, named here alone: scripts/generate.sh writes the APIs in its api package,
+# the models in its model package and ApiVersion.java in it, and scripts/gates.sh holds the module
+# name pom.xml gives the jar to it.
+invokerPackage: com.xiphub.xipfax.sdk
+hideGenerationTimestamp: true
+# No request body holds a member that may be null, so no call needs to tell null from left out:
+# jackson-databind-nullable would be a dependency for nothing.
+openApiNullable: false
+useJakartaEe: true
+globalProperties:
+  apiTests: 'false'
+  modelTests: 'false'
+  apiDocs: 'false'
+  modelDocs: 'false'
+# Error is java.lang.Error's name: the API's refusal is ApiError, as the TypeScript SDK's is.
+modelNameMappings:
+  Error: ApiError
+inlineSchemaNameMappings:
+  Error_error: ApiErrorObject
+  Error_error_details_inner: ApiErrorDetail
+  Office_sources_inner: OfficeSource
