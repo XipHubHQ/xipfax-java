@@ -1,5 +1,7 @@
 package com.xiphub.xipfax.sdk;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.http.HttpRequest;
 import java.util.function.Consumer;
 
@@ -31,9 +33,10 @@ public final class XipFax extends ApiClient {
    * Makes a client of XipFax's API from your API key, at the address you name.
    *
    * @param apiKey your API key
-   * @param baseUrl where the API answers, or null for https://api.xipfax.com
+   * @param baseUrl where the API answers, an http or https address with a host, or null for
+   *     https://api.xipfax.com
    * @throws IllegalArgumentException if the key is null, empty or only spaces, or the address isn't
-   *     one
+   *     an http or https one with a host
    */
   public XipFax(String apiKey, String baseUrl) {
     if (apiKey == null || apiKey.isBlank()) {
@@ -46,8 +49,31 @@ public final class XipFax extends ApiClient {
             request.setHeader("Authorization", authorization).setHeader("Xip-Version", API_VERSION);
     super.setRequestInterceptor(credentials);
     if (baseUrl != null) {
-      updateBaseUri(baseUrl.endsWith("/") ? baseUrl.substring(0, baseUrl.length() - 1) : baseUrl);
+      updateBaseUri(addressOf(baseUrl));
     }
+  }
+
+  /**
+   * The address each path is sent to the end of: an http or https address with a host, its last
+   * slash dropped.
+   *
+   * @param baseUrl the address named
+   * @return the address, with no slash at its end
+   * @throws IllegalArgumentException if it isn't an http or https address with a host
+   */
+  private static String addressOf(String baseUrl) {
+    URI address;
+    try {
+      address = new URI(baseUrl);
+    } catch (URISyntaxException notOne) {
+      throw new IllegalArgumentException("no address: " + baseUrl, notOne);
+    }
+    String scheme = address.getScheme();
+    if (address.getHost() == null
+        || !("https".equalsIgnoreCase(scheme) || "http".equalsIgnoreCase(scheme))) {
+      throw new IllegalArgumentException("not an http or https address with a host: " + baseUrl);
+    }
+    return baseUrl.endsWith("/") ? baseUrl.substring(0, baseUrl.length() - 1) : baseUrl;
   }
 
   /**
@@ -59,7 +85,8 @@ public final class XipFax extends ApiClient {
    */
   @Override
   public XipFax setRequestInterceptor(Consumer<HttpRequest.Builder> interceptor) {
-    super.setRequestInterceptor(interceptor == null ? credentials : interceptor.andThen(credentials));
+    super.setRequestInterceptor(
+        interceptor == null ? credentials : interceptor.andThen(credentials));
     return this;
   }
 }
