@@ -5,27 +5,6 @@ to a number or a government office, and follow each fax until it's delivered. Th
 from the API's own document, so its methods and types are the API's. It runs on Java 11 or later,
 sends with Java's own HTTP client, `java.net.http`, and takes Jackson.
 
-## Install
-
-With Maven:
-
-```xml
-<dependency>
-  <groupId>com.xiphub</groupId>
-  <artifactId>xipfax-sdk</artifactId>
-  <version>0.1.0</version>
-</dependency>
-```
-
-With Gradle:
-
-```kotlin
-implementation("com.xiphub:xipfax-sdk:0.1.0")
-```
-
-Its classes are in `com.xiphub.xipfax.sdk`, the APIs in `com.xiphub.xipfax.sdk.api` and the models
-in `com.xiphub.xipfax.sdk.model`, and the jar names its module `com.xiphub.xipfax.sdk`.
-
 ## Make an API key
 
 Sign in to the [developer console](https://developer.xipfax.com/console/), open API keys and make a
@@ -210,10 +189,6 @@ the SDK is what the document generates, then builds it with its specs and the qu
 with its sources and its Javadoc, and runs the quickstart with no key; `scripts/test.sh` runs the
 specs, which walk the quickstart against a stand-in of the API. Both run Maven offline, after
 `scripts/fetch.sh` has fetched what the build needs from Maven Central.
-
-## Help
-
-Write to [help@xipfax.com](mailto:help@xipfax.com).
 
 ## License
 
