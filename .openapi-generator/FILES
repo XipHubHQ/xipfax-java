@@ -38,6 +38,7 @@ src/main/java/com/xiphub/xipfax/sdk/model/PlanAnswer.java
 src/main/java/com/xiphub/xipfax/sdk/model/PlanNumber.java
 src/main/java/com/xiphub/xipfax/sdk/model/PlanPages.java
 src/main/java/com/xiphub/xipfax/sdk/model/Quote.java
+src/main/java/com/xiphub/xipfax/sdk/model/QuoteBody.java
 src/main/java/com/xiphub/xipfax/sdk/model/QuotePrice.java
 src/main/java/com/xiphub/xipfax/sdk/model/SendDraft.java
 src/main/java/com/xiphub/xipfax/sdk/model/Sent.java

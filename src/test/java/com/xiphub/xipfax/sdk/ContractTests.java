@@ -14,6 +14,7 @@ import com.xiphub.xipfax.sdk.model.Fax;
 import com.xiphub.xipfax.sdk.model.FaxEvent;
 import com.xiphub.xipfax.sdk.model.NewDocument;
 import com.xiphub.xipfax.sdk.model.NewWebhookEndpoint;
+import com.xiphub.xipfax.sdk.model.QuoteBody;
 import com.xiphub.xipfax.sdk.model.SendDraft;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,6 +57,11 @@ class ContractTests {
   private static Map<String, Call> calls() {
     Map<String, Call> calls = new TreeMap<>();
     calls.put("getQuote", client -> new QuoteApi(client).getQuote(3));
+    calls.put(
+        "quoteNumber",
+        client ->
+            new QuoteApi(client)
+                .quoteNumber(new QuoteBody().pages(3).toNumber("+44 20 7946 0958")));
     calls.put("getDraft", client -> new DraftApi(client).getDraft());
     calls.put(
         "addDocument",
@@ -98,6 +104,7 @@ class ContractTests {
   private static Map<String, String> answers() {
     Map<String, String> answers = new TreeMap<>();
     answers.put("getQuote", Answers.QUOTE);
+    answers.put("quoteNumber", Answers.QUOTE);
     answers.put("getDraft", "{\"id\":\"fax_1\",\"documents\":[]}");
     answers.put(
         "addDocument",

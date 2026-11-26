@@ -44,8 +44,9 @@ public final class Quickstart {
   /** What the step that sends says first, as the docs' quickstart says it. */
   public static final String REAL_AND_CHARGED =
       "This step sends a real fax, and it’s charged. It goes to the number you name, so name one of"
-          + " your own. Its pages count on your plan, or where you have no plan its price is held on"
-          + " the card you saved, and taken once it’s delivered. A fax that fails costs nothing.";
+          + " your own. Its pages count on your plan where it covers the number, or where you have no"
+          + " plan its price is held on the card you saved, and taken once it’s delivered. A fax that"
+          + " fails costs nothing.";
 
   /** How the quickstart talks to you. */
   public interface Terminal {
@@ -97,7 +98,10 @@ public final class Quickstart {
     // 1. What a fax costs. This costs nothing, and it shows your key works.
     Quote quote = quotes.getQuote(1);
     terminal.say(
-        "A one-page fax costs " + quote.getPriceShown() + " without a plan: " + quote.getTerms());
+        "A one-page fax to a number in the US, its territories or Canada costs "
+            + quote.getPriceShown()
+            + " without a plan: "
+            + quote.getTerms());
 
     // 2. Where a form goes: the offices that take Form 2848 from Ohio, and their numbers. Also free.
     OfficePage found = offices.listOffices(3, null, "Form 2848", "OH");
