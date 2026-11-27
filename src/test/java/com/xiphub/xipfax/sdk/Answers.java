@@ -13,7 +13,8 @@ final class Answers {
 
   /** GET /quote's answer for a fax of one page. */
   static final String QUOTE =
-      "{\"pages\":1,\"price\":{\"amount_minor\":100,\"currency\":\"USD\"},\"price_shown\":\"$1.00\","
+      "{\"pages\":1,\"price\":{\"amount_minor\":100,\"currency\":\"USD\"},\"plan_covers\":false,"
+          + "\"price_shown\":\"$1.00\","
           + "\"terms\":\"The stand-in’s terms.\",\"price_list\":\"stand-in\"}";
 
   /** An office of GET /offices, which takes Form 2848 from Ohio. */
